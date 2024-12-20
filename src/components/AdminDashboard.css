@@ -1,0 +1,38 @@
+/* AdminDashboard.css */
+.admin-dashboard {
+    padding: 20px;
+  }
+  
+  .add-book-btn {
+    margin-bottom: 20px;
+  }
+  
+  .add-book-form, .edit-book-form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  
+  .add-book-form input, .edit-book-form input {
+    padding: 10px;
+    margin-bottom: 10px;
+    width: 200px;
+  }
+  
+  .user-book-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+  }
+  
+  .user-book-table th, .user-book-table td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: center;
+  }
+  
+  button {
+    padding: 5px 10px;
+    cursor: pointer;
+  }
+  
