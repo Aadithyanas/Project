@@ -10,6 +10,7 @@ import Signup from './components/AdminSignup';
 import UserSignup from './components/userSignup';
 import UserLogin from './components/userlogin';
 import AdminDashboard from './components/AdminDashboard';
+import BookCatalog from './components/BookCatalog';
 
 function App() {
   const [isDarkMode, setIsDarkMode] = useState(false);
@@ -82,10 +83,12 @@ function App() {
         {/* Other Routes */}
         <Route path="/login" element={<LoginPage setUser={handleLogin} />} />
         <Route path="/profile" element={<ProfilePage user={user} />} />
+        <Route path="/BookCatalog" element={<BookCatalog />} />
         <Route path="/admin-signup" element={<Signup />} />
         <Route path="/userlogin" element={<UserLogin setUser={handleLogin} />} />
         <Route path="/usersignup" element={<UserSignup />} />
         <Route path="/admin" element={<AdminDashboard />} />
+
         
         {/* Dynamic Route for Home Page with UserId */}
         <Route path="/:userId/home" element={<Homepage />} />
