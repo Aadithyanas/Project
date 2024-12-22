@@ -6,31 +6,24 @@ This system is designed to manage the day-to-day operations of a library. It hel
 ## Project Goal  
 Create a web application that allows users to search for books, manage their accounts, and track borrowed books, while enabling librarians to manage inventory and user accounts effectively.
 
-Folders
-    public/: Static assets like the index.html file.
-    src/: Contains all application source code and components.
-    assets/: Images and other static assets.
-    components/: React components for different sections of the application.
-    AdminDashboard.jsx: Admin interface to manage users and books.
-    BookDetails.jsx: Displays detailed information about a specific book.
-    Footer.jsx: Footer component for the application.
-    Homepage.jsx: Main landing page with an overview of books.
-    LoginPage.jsx: User login functionality.
-    Navbar.jsx: Navigation bar that remains fixed across pages.
-    ProfilePage.jsx: Displays user profile details.
-    userLogin.jsx: User login component.
-    userSignup.jsx: User registration component.
-    AdminSignup.jsx: Admin registration component.
-    ThemeContext.jsx: Context API implementation for managing light and dark themes.
-    context/: Centralized context for managing global state (e.g., themes).
-    App.js: Root component managing routes and application logic.
-    Api.js: Handles API requests to Firebase.
-Files
+library-management-system/
+├── frontend/
+│   ├── src/
+│   │   ├── assets/         # Images and static assets
+│   │   ├── components/     # React components
+|   |   |── context
+│   │   ├── App.js          # Main application file
+│   │   ├── index.css       # Global styles
+│   ├── public/             # Static public files
+│   ├── package.json        # Frontend dependencies
+└── README.md
+
+#Files
   index.css: Global styles for the project.
   App.css: Component-specific styling for the main app.
   .gitignore: Specifies files and folders to ignore in version control.
   book.json: Configuration or data file for book-related data.
-Key Features
+#Key Features
   User Features
     Sign Up and Login:
   Users can register or log in.
