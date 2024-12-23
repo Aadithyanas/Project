@@ -10,20 +10,27 @@ import Signup from './components/AdminSignup';
 import UserSignup from './components/userSignup';
 import UserLogin from './components/userlogin';
 import AdminDashboard from './components/AdminDashboard';
+import ForgotPassword from './components/forgotpass';
+import AdminProfilePage from './components/Adminprofile';
 
 function App() {
   const [isDarkMode, setIsDarkMode] = useState(false);
-  const [user, setUser] = useState(null); // Store user info
+  const [user, setUser] = useState(null); 
+  const [admin, setAdmin] = useState(null); // State to store admin information
 
   const toggleTheme = () => {
     setIsDarkMode((prevMode) => !prevMode);
   };
 
-  // Fetch user from localStorage if it exists
+  // Retrieve user or admin from localStorage on initial load
   useEffect(() => {
     const savedUser = localStorage.getItem('userId');
+    const savedAdmin = localStorage.getItem('adminId');
     if (savedUser) {
       setUser(savedUser);
+    }
+    if (savedAdmin) {
+      setAdmin(savedAdmin);
     }
   }, []);
 
@@ -37,27 +44,36 @@ function App() {
 
   // ProtectedRoute Component to handle authentication
   const ProtectedRoute = ({ element }) => {
-    return user ? element : <Navigate to="/userlogin" />; // Redirect to login if not authenticated
+    return user || admin ? element : <Navigate to="/userlogin" />; // Redirect to login if not authenticated
   };
 
   // HomepageRedirect Component for redirection
   const HomepageRedirect = () => {
     if (user) {
       return <Navigate to={`/${user}/home`} />;
+    } else if (admin) {
+      return <Navigate to={`/${admin}/admin-home`} />; // Redirect to admin homepage if logged in as admin
     } else {
       return <Homepage />;
     }
   };
 
-  // Handle login and logout
-  const handleLogin = (userId) => {
+  // Handle login for user and admin separately
+  const handleUserLogin = (userId) => {
     setUser(userId);
     localStorage.setItem('userId', userId);
   };
 
+  const handleAdminLogin = (adminId) => {
+    setAdmin(adminId);
+    localStorage.setItem('adminId', adminId);
+  };
+
   const handleLogout = () => {
     setUser(null);
+    setAdmin(null);
     localStorage.removeItem('userId');
+    localStorage.removeItem('adminId');
   };
 
   return (
@@ -75,23 +91,32 @@ function App() {
         <Route
           path="/book/:id"
           element={
-            user ? <BookDetails /> : <Navigate to="/userlogin" replace />
+            user || admin ? <BookDetails /> : <Navigate to="/userlogin" replace />
           }
         />
 
-        {/* Other Routes */}
-        <Route path="/login" element={<LoginPage setUser={handleLogin} />} />
+        {/* Login and Signup Routes */}
+        <Route path="/login" element={<LoginPage setAdmin={handleAdminLogin} setUser={handleUserLogin} />} />
         <Route path="/profile" element={<ProfilePage user={user} />} />
         <Route path="/admin-signup" element={<Signup />} />
-        <Route path="/userlogin" element={<UserLogin setUser={handleLogin} />} />
+        <Route path="/userlogin" element={<UserLogin setUser={handleUserLogin} />} />
         <Route path="/usersignup" element={<UserSignup />} />
-        <Route path="/admin" element={<AdminDashboard />} />
         
-        {/* Dynamic Route for Home Page with UserId */}
-        <Route path="/:userId/home" element={<Homepage />} />
+        {/* Admin Dashboard */}
+        <Route path="/admin" element={<AdminDashboard />} />
 
-        {/* Redirect to login page if user is not authenticated */}
-        <Route path="*" element={<Navigate to="/userlogin" />} />
+        {/* Dynamic Routes for User and Admin Home Page */}
+        <Route path="/:userId/home" element={<Homepage />} />
+        <Route path="/:adminId/home" element={<Homepage />} /> {/* Admin Home page */}
+
+        {/* Forgot Password Route */}
+        <Route path="/forgot-password" element={<ForgotPassword />} />
+
+        {/* Admin Profile Page */}
+        <Route path="/admin-profile" element={<AdminProfilePage />} />
+
+        {/* Redirect if no match */}
+       
       </Routes>
       <Footer />
     </Router>

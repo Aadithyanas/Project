@@ -4,7 +4,6 @@ import { useNavigate, Link } from 'react-router-dom';
 
 const API_URL = 'https://libarayms-default-rtdb.firebaseio.com/User.json';
 
-// Function to generate a random unique userId
 const generateUserId = () => {
   return Math.floor(Math.random() * 1000000000); // Generates a random 9-digit number
 };
@@ -17,7 +16,7 @@ const UserSignup = () => {
     email: '',
     password: '',
     username: '',
-    userId: '', // Added userId field
+    userId: '',
   });
   const [message, setMessage] = useState('');
   const navigate = useNavigate();
@@ -27,35 +26,57 @@ const UserSignup = () => {
     setFormData({ ...formData, [name]: value });
   };
 
+  const validatePhoneNumber = (phone) => /^\d{10}$/.test(phone);
+
+  const validateEmail = (email) =>
+    /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+
+  const validatePassword = (password) =>
+    /^(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*])[A-Za-z\d!@#$%^&*]{8,}$/.test(password);
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     setMessage('');
 
-    // Check if all fields are filled
-    if (!formData.name || !formData.address || !formData.phone || !formData.email || !formData.password || !formData.username) {
-      setMessage('Please fill out all fields.');
+    const { name, phone, email, password, username } = formData;
+
+    if (!name || !phone || !email || !password || !username) {
+      setMessage('Please fill out all mandatory fields.');
+      return;
+    }
+
+    if (!validatePhoneNumber(phone)) {
+      setMessage('Phone number must be exactly 10 digits.');
+      return;
+    }
+
+    if (!validateEmail(email)) {
+      setMessage('Invalid email format.');
+      return;
+    }
+
+    if (!validatePassword(password)) {
+      setMessage(
+        'Password must be at least 8 characters long, include at least one uppercase letter, one number, and one special character.'
+      );
       return;
     }
 
     try {
-      // Generate a unique userId before sending the request
       const newUserId = generateUserId();
 
-      // Create the user data with the unique userId
       const userData = {
-        name: formData.name,
+        name,
         address: formData.address,
-        phone: formData.phone,
-        email: formData.email,
-        password: formData.password,
-        username: formData.username,
-        userId: newUserId, // Added userId to the data
+        phone,
+        email,
+        password,
+        username,
+        userId: newUserId,
       };
 
-      // Send data to Firebase
       await axios.post(API_URL, userData);
 
-      // Update the message and reset the form
       setMessage('Signup successful! Please log in.');
       setFormData({
         name: '',
@@ -64,10 +85,9 @@ const UserSignup = () => {
         email: '',
         password: '',
         username: '',
-        userId: '', // Reset userId after submission
+        userId: '',
       });
 
-      // Navigate to login page after successful signup
       navigate('/userlogin');
     } catch (error) {
       setMessage('Error signing up. Please try again.');
@@ -81,42 +101,42 @@ const UserSignup = () => {
         <input
           type="text"
           name="name"
-          placeholder="Name"
+          placeholder="Name (Mandatory)"
           value={formData.name}
           onChange={handleChange}
         />
         <input
           type="text"
           name="address"
-          placeholder="Address"
+          placeholder="Address (Optional)"
           value={formData.address}
           onChange={handleChange}
         />
         <input
           type="text"
           name="phone"
-          placeholder="Phone Number"
+          placeholder="Phone Number (10 digits, Mandatory)"
           value={formData.phone}
           onChange={handleChange}
         />
         <input
           type="email"
           name="email"
-          placeholder="Email"
+          placeholder="Email (Valid format, Mandatory)"
           value={formData.email}
           onChange={handleChange}
         />
         <input
           type="text"
           name="username"
-          placeholder="Username"
+          placeholder="Username (Mandatory)"
           value={formData.username}
           onChange={handleChange}
         />
         <input
           type="password"
           name="password"
-          placeholder="Password"
+          placeholder="Password (8+ chars, 1 uppercase, 1 number, 1 symbol)"
           value={formData.password}
           onChange={handleChange}
         />

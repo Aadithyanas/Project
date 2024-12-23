@@ -1,20 +1,20 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom'; // Import useNavigate
+import { useNavigate } from 'react-router-dom';
 
 const LoginPage = () => {
   const [formData, setFormData] = useState({
     username: '',
-    adminKey: ''
+    adminKey: '',
   });
-  
+
   const navigate = useNavigate(); // Initialize useNavigate for navigation
 
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prevData) => ({
       ...prevData,
-      [name]: value
+      [name]: value,
     }));
   };
 
@@ -27,17 +27,20 @@ const LoginPage = () => {
 
       // Check if the user exists with the correct adminKey
       const foundAdmin = Object.entries(admins).find(
-        ([id, admin]) => admin.name === formData.username && admin.adminKey === formData.adminKey
+        ([id, admin]) =>
+          admin.name === formData.username && admin.adminKey === formData.adminKey
       );
 
       if (foundAdmin) {
         const [adminId, adminData] = foundAdmin; // Get the admin ID and data
 
-        // Save the adminId to localStorage
-        localStorage.setItem('adminId', adminId); // Store adminId in localStorage
-        
+        // Save the adminId, adminDetails, and adminKey to localStorage
+        localStorage.setItem('adminId', adminId); // Store adminId
+        localStorage.setItem('adminDetails', JSON.stringify(adminData)); // Store adminData as a JSON string
+        localStorage.setItem('adminKey', adminData.adminKey); // Store the adminKey
+
         alert('Login successful!');
-        
+
         navigate('/admin'); // Redirect to the admin dashboard
       } else {
         alert('Invalid username or admin key.');
@@ -49,9 +52,30 @@ const LoginPage = () => {
   };
 
   return (
-    <div style={{ backgroundColor:"white", width:"400px", height:"300px", marginBottom:"100px", marginLeft:"550px", borderRadius:"10px", marginTop:"150px", textAlign: 'center', padding: '20px', fontFamily: 'Arial, sans-serif' }}>
+    <div
+      style={{
+        backgroundColor: 'white',
+        width: '400px',
+        height: '300px',
+        marginBottom: '100px',
+        marginLeft: '550px',
+        borderRadius: '10px',
+        marginTop: '150px',
+        textAlign: 'center',
+        padding: '20px',
+        fontFamily: 'Arial, sans-serif',
+      }}
+    >
       <h2 style={{ marginBottom: '20px' }}>Admin Login</h2>
-      <form onSubmit={handleLogin} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent:"center" }}>
+      <form
+        onSubmit={handleLogin}
+        style={{
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+          justifyContent: 'center',
+        }}
+      >
         <input
           type="text"
           name="username"
@@ -65,7 +89,7 @@ const LoginPage = () => {
             width: '300px',
             borderRadius: '5px',
             border: '1px solid #ccc',
-            fontSize: '16px'
+            fontSize: '16px',
           }}
         />
         <input
@@ -81,7 +105,7 @@ const LoginPage = () => {
             width: '250px',
             borderRadius: '5px',
             border: '1px solid #ccc',
-            fontSize: '16px'
+            fontSize: '16px',
           }}
         />
         <button
@@ -94,7 +118,7 @@ const LoginPage = () => {
             border: 'none',
             borderRadius: '5px',
             fontSize: '16px',
-            cursor: 'pointer'
+            cursor: 'pointer',
           }}
         >
           Login

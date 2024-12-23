@@ -12,7 +12,8 @@ function BookDetails() {
   const navigate = useNavigate();
 
   const userId = localStorage.getItem('userId'); 
- console.log(userId)
+  console.log(userId);
+
   useEffect(() => {
     if (!userId) {
       navigate('/userlogin'); 
@@ -137,6 +138,14 @@ function BookDetails() {
     navigate(`/book/${id}`, { state: { bookId: id } });
   };
 
+  const getBookImage = (imageLink) => {
+    // If imageLink is a full URL, return it as is, else prepend the base URL
+    if (imageLink && imageLink.startsWith('http')) {
+      return imageLink; // If the imageLink is already a full URL, use it directly
+    }
+    return `/${imageLink}`; // Otherwise, assume it's a relative path and prepend the base URL
+  };
+
   if (!bookDetails) {
     return <p>Loading...</p>;
   }
@@ -145,7 +154,7 @@ function BookDetails() {
     <div className='container2'>
       <div className="book-details">
         <div>
-          <img src={`/${bookDetails.imageLink}`} alt={bookDetails.title} />
+          <img src={getBookImage(bookDetails.imageLink)} alt={bookDetails.title} />
         </div>
         <div className='ptags'>
           <h2>{bookDetails.title}</h2>
@@ -175,7 +184,7 @@ function BookDetails() {
       <div className="related-books">
         {relatedBooks.map(([key, relatedBook]) => (
           <div key={key} className="related-book-card" onClick={() => handleRelatedBookClick(key)}>
-            <img src={`/${relatedBook.imageLink}`} alt={relatedBook.title} />
+            <img src={getBookImage(relatedBook.imageLink)} alt={relatedBook.title} />
             <h4>{relatedBook.title}</h4>
             <p>{relatedBook.author}</p>
           </div>

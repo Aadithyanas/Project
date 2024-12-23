@@ -31,13 +31,15 @@ body {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background: #4caf50;
+  background: #6e726e;
   color: white;
   padding: 1rem 2rem;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   width: 95vw;
   height: 60px;
   position: fixed;
+  
+  box-shadow: rgba(50, 50, 93, 0.25) 0px 30px 60px -12px, rgba(0, 0, 0, 0.3) 0px 18px 36px -18px;
   top: 0;
   left: 0;
   z-index: 1000;
@@ -51,7 +53,7 @@ body {
 }
 
 .nav-links a {
-  color: white;
+  color: rgb(0, 0, 0);
   text-decoration: none;
   font-weight: 600;
   transition: color 0.3s;
@@ -75,20 +77,32 @@ li {
 
 .btn-login {
   margin-top: -1px;
-  padding: 13px;
+  padding: 10px;
   border-radius: 15px;
-
-}
-#signup{
   width: 140px;
   padding: 13px;
-  margin-top: -1px;
+
+
+}
+#home{
+padding: 10px;
+margin-top: 13px;
+height: 50px;
+background-color: wheat;
+color: #000000;
+font-weight: bold;
+border-radius: 15px;
+}
+#profile{
+  padding: 10px;
+  height: 50px;
   border-radius: 15px;
 }
+
 
 nav {
   display: flex;
-  margin-left: -100px;
+  margin-left: -150px;
   gap: 10px;
   justify-content: center;
   align-items: center;
@@ -128,6 +142,57 @@ nav {
 .hero-content h2 span {
   color: #ffeb3b;
 }
+.flex {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: center;
+}
+
+.card {
+  position: relative;
+  text-align: center;
+  width: 120px;
+}
+
+.card img {
+  width: 120px;
+  height: 180px;
+  border-radius: 15px;
+  transition: transform 0.3s ease-in-out; /* Smooth transition for hover effect */
+}
+
+.card:hover img {
+  transform: translateY(-20px); /* Move image up on hover */
+}
+
+.card .book-title {
+  margin-top: 10px;
+  font-size: 14px;
+  font-weight: bold;
+  color: #333;
+  opacity: 0; /* Initially hide the title */
+  transform: translateY(20px); /* Move text down initially */
+  transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
+}
+
+.card:hover .book-title {
+  opacity: 1; /* Show the title on hover */
+  transform: translateY(0); /* Move text up into position */
+}
+
+
+.hero-image img {
+  border-radius: 15px;
+  width: 200px;
+  height: 500px;
+  transition: all 0.3s ease-in-out;
+}
+
+
+
+
+
 
 
 
@@ -150,8 +215,7 @@ nav {
 }
 
 .hero-image img {
-  width: 100%;
-  max-width: 400px;
+  width: 300px;
 }
 
 .catalog {

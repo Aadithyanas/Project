@@ -4,12 +4,25 @@ import './AdminDashboard.css';
 
 const AdminDashboard = () => {
   const [borrowedBooks, setBorrowedBooks] = useState([]);
+  const [newBook, setNewBook] = useState({
+    author: '',
+    country: '',
+    imageLink: '',
+    language: '',
+    link: '',
+    pages: '',
+    title: '',
+    year: '',
+    publish_date: '',
+    description: '',
+    genre: '',
+    availableStock: '',
+  });
 
   useEffect(() => {
     axios
       .get('https://libarayms-default-rtdb.firebaseio.com/details.json')
       .then((response) => {
-        console.log('Raw response data:', response.data); // Debugging
         const rawData = response.data || {};
         const formattedBooks = [];
 
@@ -18,30 +31,117 @@ const AdminDashboard = () => {
             ? detailData.bookd
             : Object.values(detailData.bookd || {});
           books.forEach((book) => {
-            console.log('Book data:', book); 
-            if (book.userId && book.userId !== "undefined") {
+            if (detailData.userId && detailData.bookId !== "undefined") {
               formattedBooks.push({
                 id: detailId,
                 bookId: detailData.bookId,
                 author: book.author,
                 title: book.title,
-                borrowDate: book.borrowDate,
-                userId: book.userId,
+                borrowDate: detailData.borrowDate,
+                userId: detailData.userId,
               });
             }
           });
         });
 
-        console.log('Formatted books:', formattedBooks); // Debugging
         setBorrowedBooks(formattedBooks);
       })
       .catch((error) => console.error('Error fetching borrowed books:', error));
   }, []);
 
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setNewBook({ ...newBook, [name]: value });
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    try {
+      const response = await axios.post('https://libarayms-default-rtdb.firebaseio.com/books.json', newBook);
+      alert('Book added successfully!');
+      setNewBook({
+        author: '',
+        country: '',
+        imageLink: '',
+        language: '',
+        link: '',
+        pages: '',
+        title: '',
+        year: '',
+        publish_date: '',
+        description: '',
+        genre: '',
+        availableStock: '',
+      });
+    } catch (error) {
+      console.error('Error adding book:', error);
+      alert('Failed to add the book.');
+    }
+  };
+
   return (
     <div className="admin-dashboard">
-      <h1>Admin Dashboard</h1>
-      <section className="section">
+    <h1>Admin Dashboard</h1>
+    <div className="section">
+      {/* Add Book Form */}
+      <div className="add-book-form">
+        <h2>Add a New Book</h2>
+        <form onSubmit={handleSubmit}>
+          <label>
+            Author:
+            <input type="text" name="author" value={newBook.author} onChange={handleChange} required />
+          </label>
+          <label>
+            Country:
+            <input type="text" name="country" value={newBook.country} onChange={handleChange} required />
+          </label>
+          <label>
+            Image Link:
+            <input type="text" name="imageLink" value={newBook.imageLink} onChange={handleChange} required />
+          </label>
+          <label>
+            Language:
+            <input type="text" name="language" value={newBook.language} onChange={handleChange} required />
+          </label>
+          <label>
+            Link:
+            <input type="url" name="link" value={newBook.link} onChange={handleChange} required />
+          </label>
+          <label>
+            Pages:
+            <input type="number" name="pages" value={newBook.pages} onChange={handleChange} required />
+          </label>
+          <label>
+            Title:
+            <input type="text" name="title" value={newBook.title} onChange={handleChange} required />
+          </label>
+          <label>
+            Year:
+            <input type="number" name="year" value={newBook.year} onChange={handleChange} required />
+          </label>
+          <label>
+            Publish Date:
+            <input type="date" name="publish_date" value={newBook.publish_date} onChange={handleChange} required />
+          </label>
+          <label>
+            Description:
+            <textarea name="description" value={newBook.description} onChange={handleChange} required />
+          </label>
+          <label>
+            Genre:
+            <input type="text" name="genre" value={newBook.genre} onChange={handleChange} required />
+          </label>
+          <label>
+            Available Stock:
+            <input type="number" name="availableStock" value={newBook.availableStock} onChange={handleChange} required />
+          </label>
+          <button type="submit">Add Book</button>
+        </form>
+      </div>
+  
+      {/* Borrowed Books Table */}
+      <div className="borrowed-books">
         <h2>Borrowed Book Details</h2>
         <table className="user-book-table">
           <thead>
@@ -58,7 +158,7 @@ const AdminDashboard = () => {
               borrowedBooks.map((book, index) => (
                 <tr key={index}>
                   <td>{book.userId}</td>
-                  <td>{book.bookId}</td>
+                  <td>{Number(book.bookId) + 1}</td>
                   <td>{book.title}</td>
                   <td>{book.author}</td>
                   <td>{new Date(book.borrowDate).toLocaleDateString()}</td>
@@ -73,9 +173,10 @@ const AdminDashboard = () => {
             )}
           </tbody>
         </table>
-      </section>
+      </div>
     </div>
-  );
+  </div>
+  )  
 };
 
 export default AdminDashboard;

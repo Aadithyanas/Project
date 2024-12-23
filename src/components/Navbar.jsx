@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import '../App.css'
 
 const Navbar = ({ isDarkMode, toggleTheme, handleLogout }) => {
   const navigate = useNavigate();
@@ -14,7 +15,7 @@ const Navbar = ({ isDarkMode, toggleTheme, handleLogout }) => {
 
   const userId = localStorage.getItem('userId'); // Get userId from localStorage to check if logged in as user
   const adminId = localStorage.getItem('adminId'); // Get adminId from localStorage to check if logged in as admin
-  console.log(adminId)
+
   return (
     <header className="header">
       <div className="logo-container">
@@ -34,18 +35,24 @@ const Navbar = ({ isDarkMode, toggleTheme, handleLogout }) => {
 
       <nav>
         <ul className="nav-links">
-          <li>
-            <Link to="/">Home</Link>
-          </li>
-          <li>
-            <a href="#catalog">Catalog</a>
-          </li>
-          <li>
-            <a href="#events">Events</a>
-          </li>
-          <li>
-            <Link to="/profile">Profile</Link>
-          </li>
+        
+            <Link to="/">
+           <button id='home'>Home</button>
+            </Link>
+        
+
+          {/* Conditionally render Profile button */}
+          
+            {adminId ? (
+              <Link to="/admin-profile">
+                <button id = "profile">Admin Profile</button>
+              </Link>
+            ) : userId ? (
+              <Link to="/profile">
+                <button id ="profile">Profile</button>
+              </Link>
+            ) : null}
+          
         </ul>
 
         <div className="nav-buttons">
@@ -55,7 +62,7 @@ const Navbar = ({ isDarkMode, toggleTheme, handleLogout }) => {
               User Logout
             </button>
           ) : (
-            <Link to="/userlogin">
+            <Link to="/usersignup">
               <button className="btn-login">User Login</button>
             </Link>
           )}
