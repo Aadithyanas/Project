@@ -144,7 +144,7 @@ List out the key features of your application.
 ![book collection Overview](/sc/BookCatalog.png)
 *Market overview section.*
 
-![Admin Dashborad](/sc/Admin Dashboard.png)
+![Admin Dashborad](/sc/AdminDashboard.png)
 *Trading section.*
 ![Dark mode feature](/sc/Darkmode.png)
 
