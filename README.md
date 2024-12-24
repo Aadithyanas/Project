@@ -146,6 +146,8 @@ List out the key features of your application.
 
 ![Admin Dashborad](/sc/Admin Dashboard.png)
 *Trading section.*
+![Dark mode feature](/sc/Darkmode.png)
+
 
 ![FAQ](/sc/FAQ.png)
 *FAQ section.*
