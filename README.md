@@ -148,6 +148,9 @@ List out the key features of your application.
 *Trading section.*
 ![Dark mode feature](/sc/Darkmode.png)
 
+![footer section](/sc/footerPage.png)
+*footer section.*
+
 
 ![FAQ](/sc/FAQ.png)
 *FAQ section.*
