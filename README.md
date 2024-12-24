@@ -138,13 +138,13 @@ List out the key features of your application.
 
 ## Screenshots
 
-![Homepage](/sc/Home.png)
+![Homepage](/sc/Homepage.png)
 *Homepage.*
 
-![Market Overview](/sc/Market.png)
+![book collection Overview](/sc/BookCatalog.png)
 *Market overview section.*
 
-![Trading View](/sc/Bitcoin.png)
+![Admin Dashborad](/sc/Admin Dashboard.png)
 *Trading section.*
 
 ![FAQ](/sc/FAQ.png)
