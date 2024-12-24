@@ -142,18 +142,22 @@ List out the key features of your application.
 *Homepage.*
 
 ![book collection Overview](/sc/BookCatalog.png)
-*Market overview section.*
+*book collection Overview.*
 
 ![Admin Dashborad](/sc/AdminDashboard.png)
-*Trading section.*
+*Admin Dashborad.*
+
 ![Dark mode feature](/sc/Darkmode.png)
+*Dark mode feature*
+
+
+![userSignpage](/sc/userSignpage.png)
+*userSignpage.*
 
 ![footer section](/sc/footerPage.png)
 *footer section.*
 
 
-![FAQ](/sc/FAQ.png)
-*FAQ section.*
 
 
 ## Contributing
